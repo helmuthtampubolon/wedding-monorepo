@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Garden vintage palette */
+  --background: #f8f5ea;
+  --foreground: #34402d;
+  --card: #f1ecdc;
+  --card-foreground: #34402d;
+  --primary: #4a5d3f;
+  --primary-foreground: #f8f5ea;
+  --secondary: #ddd4b8;
+  --secondary-foreground: #3d4a32;
+  --muted: #ebe4cf;
+  --muted-foreground: #5c5f47;
+  --accent: #c98a5a;
+  --accent-foreground: #34402d;
+  --border: #cfc5a5;
+  --input: #d6ccac;
+  --ring: #6f8458;
+}
+
+/* ─── Reset & Base ─── */
+*, *::before, *::after {
+  border-color: var(--border);
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Typography ─── */
+h1, h2, h3, h4 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+/* ─── Selection ─── */
+::selection {
+  background-color: var(--accent);
+  color: #fff;
+}
+
+/* ─── Custom Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--muted);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ─── Admin area uses Inter ─── */
+.font-sans,
+[class*="admin"] {
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+/* ─── Transitions ─── */
+a, button {
+  transition: color 0.2s ease, background-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* ─── Focus ring ─── */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ─── Scroll Reveal ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Right Panel Scrollbar (desktop split-screen) ─── */
+.right-panel::-webkit-scrollbar { width: 4px; }
+.right-panel::-webkit-scrollbar-track { background: transparent; }
+.right-panel::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 99px;
+}
+
+/* ─── Event Card Ornate Border ─── */
+.event-card-border {
+  border: 1.5px solid #c9a84c;
+  box-shadow:
+    0 0 0 4px rgba(201, 168, 76, 0.10),
+    inset 0 0 0 3px rgba(201, 168, 76, 0.06);
+}
+
+/* ─── Arch Photo Frame ─── */
+.arch-frame {
+  border-radius: 9999px 9999px 0 0;
+  overflow: hidden;
+}
+
+/* ─── Vinyl Disc Paused (animation stopped) ─── */
+.vinyl-paused {
+  animation-play-state: paused !important;
+}
+
