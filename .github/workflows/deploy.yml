@@ -37,17 +37,13 @@ jobs:
           # Pindahkan hasil build React ke folder public Laravel
           cp -R dist/* ../backend/public/
 
-      - name: Upload ke Hostinger via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 21
-          local-dir: ./backend/
-          server-dir: /domains/domain-kamu.com/wedding-app/
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/.env*
+      - name: Upload ke Hostinger via SSH (Rsync)
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.SSH_HOST }}
+          REMOTE_USER: ${{ secrets.SSH_USERNAME }}
+          REMOTE_PORT: ${{ secrets.SSH_PORT }}
+          SOURCE: "backend/"
+          TARGET: "/domains/domain-kamu.com/wedding-app/"
+          EXCLUDE: "/node_modules/, /.git/, /.env*"
