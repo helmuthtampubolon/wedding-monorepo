@@ -19,10 +19,7 @@ jobs:
           php-version: '8.3'
           extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, iconv, json, libxml, pdo, phar, tokenizer
 
-      - name: Install Dependencies Backend
-        run: |
-          cd backend
-          composer install --no-dev --optimize-autoloader
+
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -50,4 +47,8 @@ jobs:
           REMOTE_PORT: ${{ secrets.SSH_PORT }}
           SOURCE: "backend/"
           TARGET: "~/domains/lightpink-locust-615574.hostingersite.com/public_html/"
-          EXCLUDE: "/node_modules/, /.git/"
+          EXCLUDE: "/node_modules/, /.git/, /vendor/"
+          SCRIPT_AFTER: |
+            cd ~/domains/lightpink-locust-615574.hostingersite.com/public_html
+            composer install --no-dev --optimize-autoloader
+            php artisan migrate --force
