@@ -27,4 +27,5 @@ return new class extends Migration
             $table->dropColumn(['phone', 'notes', 'is_sent']);
         });
     }
+
 };
