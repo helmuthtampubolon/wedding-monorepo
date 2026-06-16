@@ -45,5 +45,5 @@ jobs:
           REMOTE_USER: ${{ secrets.SSH_USERNAME }}
           REMOTE_PORT: ${{ secrets.SSH_PORT }}
           SOURCE: "backend/"
-          TARGET: "~/domains/lightpink-locust-615574.hostingersite.com/wedding-app/"
+          TARGET: "~/domains/lightpink-locust-615574.hostingersite.com/public_html/"
           EXCLUDE: "/node_modules/, /.git/, /.env*"
