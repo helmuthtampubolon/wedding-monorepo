@@ -94,4 +94,3 @@ class InvitationController extends Controller
         if ($i->user_id !== request()->user()->id) abort(403);
     }
 }
-

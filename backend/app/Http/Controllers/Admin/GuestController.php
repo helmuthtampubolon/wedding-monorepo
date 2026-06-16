@@ -11,7 +11,7 @@ class GuestController extends Controller
 {
     public function index(Request $r, Invitation $invitation)
     {
-        $this->own($invitation);
+        $this->authorizeOwn($invitation);
         $q = $invitation->guests();
 
         if ($r->search) {
@@ -26,7 +26,7 @@ class GuestController extends Controller
 
     public function store(Request $r, Invitation $invitation)
     {
-        $this->own($invitation);
+        $this->authorizeOwn($invitation);
         
         // Handle single or bulk creation via JSON array if provided
         if ($r->has('guests') && is_array($r->guests)) {
@@ -59,7 +59,7 @@ class GuestController extends Controller
 
     public function update(Request $r, Invitation $invitation, Guest $guest)
     {
-        $this->own($invitation);
+        $this->authorizeOwn($invitation);
         abort_if($guest->invitation_id !== $invitation->id, 404);
 
         $data = $r->validate([
@@ -75,7 +75,7 @@ class GuestController extends Controller
 
     public function markSent(Request $r, Invitation $invitation, Guest $guest)
     {
-        $this->own($invitation);
+        $this->authorizeOwn($invitation);
         abort_if($guest->invitation_id !== $invitation->id, 404);
 
         $data = $r->validate(['is_sent' => 'required|boolean']);
@@ -86,7 +86,7 @@ class GuestController extends Controller
 
     public function exportCsv(Invitation $invitation)
     {
-        $this->own($invitation);
+        $this->authorizeOwn($invitation);
         $guests = $invitation->guests()->orderBy('name')->get();
 
         $csv = "Nama,Group,No HP,Catatan,Status Kirim,Link\n";
@@ -109,7 +109,7 @@ class GuestController extends Controller
 
     public function destroy(Invitation $invitation, Guest $guest)
     {
-        $this->own($invitation);
+        $this->authorizeOwn($invitation);
         abort_if($guest->invitation_id !== $invitation->id, 404);
         $guest->delete();
         return ['ok' => true];
@@ -117,17 +117,17 @@ class GuestController extends Controller
 
     public function rsvps(Invitation $invitation)
     {
-        $this->own($invitation);
+        $this->authorizeOwn($invitation);
         return $invitation->rsvps()->latest()->get();
     }
 
     public function wishes(Invitation $invitation)
     {
-        $this->own($invitation);
+        $this->authorizeOwn($invitation);
         return $invitation->wishes()->latest()->get();
     }
 
-    protected function own(Invitation $i)
+    protected function authorizeOwn(Invitation $i)
     {
         if ($i->user_id !== request()->user()->id) abort(403);
     }
