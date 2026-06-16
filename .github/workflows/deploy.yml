@@ -37,6 +37,10 @@ jobs:
           # Pindahkan hasil build React ke folder public Laravel
           cp -R dist/* ../backend/public/
 
+      - name: Buat file .env dari GitHub Secret
+        run: |
+          echo "${{ secrets.PRODUCTION_ENV }}" > backend/.env
+
       - name: Upload ke Hostinger via SSH (Rsync)
         uses: easingthemes/ssh-deploy@main
         env:
@@ -46,4 +50,4 @@ jobs:
           REMOTE_PORT: ${{ secrets.SSH_PORT }}
           SOURCE: "backend/"
           TARGET: "~/domains/lightpink-locust-615574.hostingersite.com/public_html/"
-          EXCLUDE: "/node_modules/, /.git/, /.env*"
+          EXCLUDE: "/node_modules/, /.git/"
